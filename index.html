@@ -20,11 +20,15 @@
 
     <script>    
 
-        let score = {
-            wins:0,
-            ties:0,
-            losses:0
-        };
+       let score = JSON.parse(localStorage.getItem('score'))
+
+       if (score === null){
+        score = {
+            wins : 0,
+            ties : 0,
+            losses : 0
+        }
+       }
 
         function pickComupterMove(){
 
@@ -85,17 +89,18 @@
                 score.losses += 1;
             }
 
+            localStorage.setItem('score' , JSON.stringify(score))
+
             document.querySelector('.js-score').innerHTML =  `Wins: ${score.wins}, Ties: ${score.ties}, Losses: ${score.losses}`;
             document.querySelector('.js-result').innerHTML = `You ${result}`;
             document.querySelector('.js-move').innerHTML = `You ${playerMove} - ${comupterMove} Computer`;
             
         }
         function reset(){   
-            score = {
-                wins: 0,
-                ties: 0,
-                losses: 0
-            };
+            score.wins = 0;
+            score.ties = 0;
+            score.losses = 0;
+            localStorage.removeItem('score');
             document.querySelector('.js-score').innerHTML = `Wins: ${score.wins}, Ties: ${score.ties}, Losses: ${score.losses}`;
             document.querySelector('.js-result').innerHTML = '';
             document.querySelector('.js-move').innerHTML = '';
